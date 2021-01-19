@@ -1,0 +1,16 @@
+$(document).ready(function(){
+  var ques = document.getElementById("question");
+  ques.innerHTML="Which layout is preferred?";
+});
+
+function btnA()
+{
+  var ques = document.getElementById("question");
+  ques.innerHTML="That's right! You got it! :)";
+};
+
+function btnB()
+{
+  var ques = document.getElementById("question");
+  ques.innerHTML="Why do you choose this? :(";
+};
