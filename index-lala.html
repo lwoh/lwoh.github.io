@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>-Find My Transport Mode-</title>
+    <style>
+      #map {
+        height: 100%;
+      }
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .controls {
+        margin-top: 10px;
+        border: 1px solid transparent;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        height: 32px;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      }
+
+	  #dim {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 12px;
+        font-weight: 300;
+        margin-top: 8px;
+		margin-bottom: 8px;
+		margin-left: 8px;
+		margin-right: 8px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 300px;
+      }
+      
+	  #dim:focus {
+        border-color: #F7A031;
+      }	  
+	  
+	  #weight {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 12px;
+        font-weight: 300;
+        margin-top: 8px;
+		margin-bottom: 8px;
+		margin-left: 8px;
+		margin-right: 8px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 300px;
+      }
+      
+	  #weight:focus {
+        border-color: #F7A031;
+      } 
+
+      #pac-input {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 12px;
+        font-weight: 300;
+        margin-top: 8px;
+		margin-bottom: 8px;
+		margin-left: 8px;
+		margin-right: 8px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 300px;
+      }
+      
+	  #pac-input:focus {
+        border-color: #F7A031;
+      }
+	  	  
+	  #pac-input-to {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 12px;
+        font-weight: 300;
+        margin-top: 8px;
+		margin-bottom: 8px;
+		margin-left: 8px;
+		margin-right: 8px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 300px;
+      }
+
+	  #pac-input-to:focus {
+        border-color: #F7A031;
+      } 
+     
+	  #over_map { 
+	    position: absolute; top: 50px; left: 10px; z-index: 99;
+        background-color: #F7F7F7;
+        font-family: Roboto;
+        font-size: 12px;
+        font-weight: 300;
+		margin-top: 4px;
+		margin-bottom: 50px;
+		margin-left: 18px;
+        margin-right: 12px;
+        padding: 10px 10px 10px 10px;
+        text-overflow: ellipsis;
+        width: 324px;	  }
+		
+		 #pac-input-to:focus {
+        border-color: #F7A031;
+      }	  
+	  	  
+	  #clickMe {
+        background-color: #F16722;
+        font-family: Roboto;
+        font-size: 12px;
+		font-weight: 400;
+        margin-top: 8px;
+		margin-bottom: 8px;
+		margin-left: 8px;
+		margin-right: 8px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 200px;
+		height: 35px;
+		border-color: #F16722;
+      }
+      
+	  #clickMe:focus {
+	    background-color: #fff;
+        border-color: #fff;
+      }
+	  
+	  #reset {
+        background-color: #F7A031;
+        font-family: Roboto;
+        font-size: 12px;
+        font-weight: 400;
+        margin-top: 8px;
+		margin-bottom: 8px;
+		margin-left: 8px;
+		margin-right: 8px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 80px;
+		height: 35px;
+		border-color: #F7A031;
+      }
+      
+	  #reset:focus {
+	    background-color: #fff;
+        border-color: #fff;
+      }	
+	  
+	  
+	   #txtlabel {
+        background-color: #F7F7F7;
+        font-family: Roboto;
+        font-size: 12px;
+        font-weight: 300;
+        margin-top: 8px;
+		margin-bottom: 8px;
+		margin-left: 8px;
+		margin-right: 8px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 300px;
+      }
+	  
+	  #imgicon {        
+        margin-top: 8px;
+		margin-bottom: 8px;
+		margin-left: 8px;
+		margin-right: 8px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 32px;
+		height: 32px;
+		border-color: #F7A031;
+      }
+	  
+	  #logo {        
+        margin-top: 8px;
+		margin-bottom: 8px;
+		margin-left: 8px;
+		margin-right: 8px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 32px;
+		height: 32px;
+		border-color: #F7A031;
+      }
+      
+	   #bicyclelabel {
+        background-color: #F7F7F7;
+        font-family: Roboto;
+        font-size: 12px;
+        font-weight: 500;
+        margin-top: 8px;
+		margin-bottom: 8px;
+		margin-left: 8px;
+		margin-right: 8px;
+        padding: 0 5px 0 5px;
+        text-overflow: ellipsis;
+        width: 300px;
+      }
+	  
+	  #vanlabel {
+        background-color: #F7F7F7;
+        font-family: Roboto;
+        font-size: 12px;
+        font-weight: 500;
+        margin-top: 8px;
+		margin-bottom: 8px;
+		margin-left: 8px;
+		margin-right: 8px;
+        padding: 0 5px 0 5px;
+        text-overflow: ellipsis;
+        width: 300px;
+      }
+	  
+	  #suggestionlabel {
+        background-color: #F7F7F7;
+        font-family: Roboto;
+        font-size: 12px;
+        font-weight: 500;
+        margin-top: 8px;
+		margin-bottom: 8px;
+		margin-left: 8px;
+		margin-right: 8px;
+        padding: 0 5px 0 5px;
+        text-overflow: ellipsis;
+        width: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div id="over_map">
+	        <div>
+				<label id="txtlabel">Dimension of shipment(s) in CM<sup>3</sup></label>
+			</div>
+            <input id="dim" class="controls" type="number" placeholder="Dimension. (Eg., 30000) *MAX for bicycle=64000">
+			
+			<div>
+				<label id="txtlabel">Weight of shipment(s) in KG</label>
+			</div>
+            <input id="weight" class="controls" type="number" placeholder="Weight. (Eg., 5) *MAX for bicycle=10">
+			
+			<input id="pac-input" class="controls" type="text" placeholder="From">
+            
+			<input id="pac-input-to" class="controls" type="text" placeholder="To">
+			
+			<input id="clickMe" float="right" type="button" value="Find my transport mode!"/>
+
+			<input id="reset" float="left" type="button" value="Clear"/>			
+
+			<div>
+				<img id="imgicon" src="images/van.png" title="5.5 tons/Van" alt="logo"">
+			</div>
+			<div>
+				<label id="vanlabel"></label>
+			</div>
+			
+			<div>
+				<img id="imgicon" src="images/bicycle.png" title="Bicycle" alt="logo">
+			</div>
+			<div>
+				<label id="bicyclelabel"></label>
+			</div>
+
+			<div>
+				<img id="imgicon" src="images/suggestion.png" title="Suggestion" alt="logo">
+			</div>
+			<div>
+				<label id="suggestionlabel"></label>
+			</div>
+			<div>
+				<a href="about-lala.html" target="_blank"><img id="logo" src="images/help.png" alt="logo"></a>
+			</div>
+	</div>
+	 
+    <script>
+        
+	  document.getElementById("reset").onclick = function () 
+	  {
+		document.getElementById('dim').value = '';
+		document.getElementById('weight').value = '';
+		document.getElementById('pac-input').value = ''; 
+		document.getElementById('pac-input-to').value = ''; 
+		//clean display label as well & think of other initialisation needs
+		document.getElementById('bicyclelabel').innerHTML = "";
+		document.getElementById('vanlabel').innerHTML = "";
+		document.getElementById('suggestionlabel').innerHTML = "";
+	  }
+	  
+      function initAutocomplete() {
+		
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 22.3358, lng: 114.1495},
+          zoom: 15,
+          mapTypeId: 'roadmap'
+        });		  
+        
+		var input = document.getElementById('pac-input');
+        var searchBox = new google.maps.places.SearchBox(input);
+        map.addListener('bounds_changed', function() {
+          searchBox.setBounds(map.getBounds());
+        });
+
+		var input_to = document.getElementById('pac-input-to');
+        var searchBoxTo = new google.maps.places.SearchBox(input_to);
+        map.addListener('bounds_changed', function() {
+          searchBoxTo.setBounds(map.getBounds());
+        });		
+		
+		/////////////////
+        var markers1 = [];
+		var place2;
+
+        // Listen for the event fired when the user selects a prediction and retrieve
+        // more details for that place.
+        searchBox.addListener('places_changed', function() {
+          var places = searchBox.getPlaces();
+
+          if (places.length == 0) {
+		    return;
+          }
+
+          // Clear out the old markers.
+          markers1.forEach(function(marker) {
+            marker.setMap(null);
+          });
+          markers1 = [];
+
+          // For each place, get the icon, name and location.
+          var bounds1 = new google.maps.LatLngBounds();
+          places.forEach(function(place1) {
+            if (!place1.geometry) {
+              console.log("Returned place contains no geometry");
+               return;
+		  }
+            
+          // Create a marker for each place.
+          markers1.push(new google.maps.Marker({
+              map: map,
+              title: place1.name,
+              position: place1.geometry.location
+          }));
+
+          if (place1.geometry.viewport) {
+              // Only geocodes have viewport.
+              bounds1.union(place1.geometry.viewport);
+          } else {
+              bounds1.extend(place1.geometry.location);
+          }
+	      place2=place1;
+          });
+          map.fitBounds(bounds1);
+        });
+		
+		///////
+		var markers2 = [];
+		var place3;
+		
+		searchBoxTo.addListener('places_changed', function() {
+          var places = searchBoxTo.getPlaces();
+
+          if (places.length == 0) {
+		    return;
+          }
+
+          // Clear out the old markers.
+          markers2.forEach(function(marker) {
+            marker.setMap(null);
+          });
+          markers2 = [];
+
+          // For each place, get the icon, name and location.
+          var bounds = new google.maps.LatLngBounds();
+          places.forEach(function(place) {
+            if (!place.geometry) {
+              console.log("Returned place contains no geometry");
+               return;
+		  }
+            
+          // Create a marker for each place.
+          markers2.push(new google.maps.Marker({
+              map: map,
+              title: place.name,
+              position: place.geometry.location
+          }));
+
+          if (place.geometry.viewport) {
+            // Only geocodes have viewport.
+            bounds.union(place.geometry.viewport);
+			bounds.union(place2.geometry.viewport);
+          } else {
+            bounds.extend(place.geometry.location);
+			bounds.extend(place2.geometry.location);
+          }
+	      place3=place;
+          });
+		  
+          map.fitBounds(bounds);
+        });
+		
+		///////Button - search is clicked////////
+		document.getElementById("clickMe").onclick = function () 
+		{
+			   document.getElementById('bicyclelabel').innerHTML = "";
+			   document.getElementById('vanlabel').innerHTML = "";
+			   document.getElementById('suggestionlabel').innerHTML = "";
+		
+		       var dimvalue = document.getElementById('dim').value;
+			   var weightvalue = document.getElementById('weight').value;
+			   var pacinputvalue = document.getElementById('pac-input').value; 
+			   var pacinputtovalue = document.getElementById('pac-input-to').value; 
+		       
+			   
+			   if ( dimvalue == null || dimvalue == '' )
+			   {	
+                  alert ('Dimension is mandatory!');
+				  return;			   
+			   }
+			      
+			   if ( weightvalue == null || weightvalue == '' )
+			   {	
+				  alert ('Weight is mandatory!');
+				  return;
+			   }
+			   
+			   if ( pacinputvalue == null || pacinputvalue == '' )
+			   {
+				  alert ('Origin is mandatory!');
+				  return;
+			   }
+			   
+			   if ( pacinputtovalue == null || pacinputtovalue == '' )
+			   {
+			      alert ('Destination is mandatory!');
+				  return;
+			   }
+			   
+			   var origin = new google.maps.LatLng(place2.geometry.location.lat(), place2.geometry.location.lng());
+               var destination = new google.maps.LatLng(place3.geometry.location.lat(), place3.geometry.location.lng());
+
+               var service = new google.maps.DistanceMatrixService;
+			   
+			   var driving_zero = 0;
+			   var duration_driving_val;
+			   var duration_driving_text;
+			   var distance_driving_val;
+			   var distance_driving_text;
+
+               var cycling_zero = 0;
+			   var duration_cycling_val;
+			   var duration_cycling_text;
+			   var distance_cycling_val;
+			   var distance_cycling_text;
+			   //alert("here3321");
+               service.getDistanceMatrix(
+               {
+				    origins: [origin],
+					destinations: [destination],
+					travelMode: 'DRIVING',
+					unitSystem: google.maps.UnitSystem.METRIC,
+			   }, function(response, status) {
+			   //alert("here1111");
+					if (status !== 'OK') 
+					{ //alert("here1111q");
+						alert('Error was: ' + status);
+						return;
+					} 
+					else 
+					{
+						//alert("here1111e");
+						var row = [];
+						row = response.rows[0].elements;
+						//alert("here1111dd");
+						if (row[0].status !== 'ZERO_RESULTS')
+						{
+                            duration_driving_val=row[0].duration.value;
+							duration_driving_text=row[0].duration.text;
+						
+							distance_driving_val=row[0].distance.value;
+							distance_driving_text=row[0].distance.text;
+						}
+						else
+						{ 
+							driving_zero = 1;
+						}							
+					}
+                    //alert("here1111assss");
+					var dim_val = document.getElementById('dim').value;
+					var weight_val = document.getElementById('weight').value;
+				
+					//var big=1;
+				    //alert("here1111edadasas");
+					if (dim_val <= 64000 &&  weight_val <= 10 )
+					{
+							//big=0;
+							//alert("here333");
+							service.getDistanceMatrix(
+							{
+								origins: [origin],
+								destinations: [destination],
+								travelMode: 'BICYCLING',
+								unitSystem: google.maps.UnitSystem.METRIC,
+							}, function(response, status) {
+  
+                            //alert("here3444");
+								if (status !== 'OK') 
+								{
+									alert('Error was: ' + status);
+									return;
+								} 
+								else 
+								{
+									var row = [];
+									row = response.rows[0].elements;
+							
+									if (row[0].status !== 'ZERO_RESULTS')
+									{								
+										duration_cycling_val=row[0].duration.value;
+										duration_cycling_text=row[0].duration.text;
+							
+										distance_cycling_val=row[0].distance.value;
+										distance_cycling_text=row[0].distance.text;
+									}
+									else
+									{
+										cycling_zero = 1;
+									}
+								}
+								///
+								var textdisp1 = '';
+								var textdisp2 = '';
+								var textdisp3 = '';
+
+								if ( cycling_zero == 0 && driving_zero == 0 )
+								{
+									var founddur = "FOUND! Duration=";
+					
+									if ( duration_cycling_val < duration_driving_val)
+									{
+										textdisp1 = founddur.concat(duration_cycling_text, ", Distance=",distance_cycling_text);
+									}
+									else if (duration_cycling_val > duration_driving_val)
+									{
+										textdisp2 = founddur.concat(duration_driving_text, ", Distance=", distance_driving_text);
+									}
+									else
+									{
+										textdisp2 = founddur.concat(duration_driving_text, ", Distance=", distance_driving_text);
+										textdisp1 = founddur.concat(duration_cycling_text, ", Distance=",distance_cycling_text);  
+										textdisp3 = "BOTH ARE EQUALLY REALIABLE & FAST!";
+									}
+								}
+								else if ( cycling_zero == 1 )
+								{
+									textdisp2 = "FOUND! Duration=" + duration_driving_text + ", Distance=" + distance_driving_text;
+								}
+								else if ( driving_zero == 1 )
+								{
+									textdisp1 = "FOUND! Duration=" + duration_cycling_text + ", Distance=" + distance_cycling_text;
+								}
+								else
+								{
+									textdisp3 = "SORRY! Zero results found.";
+								}
+								//alert("here");
+								document.getElementById('vanlabel').innerHTML = textdisp2;
+								document.getElementById('bicyclelabel').innerHTML =  textdisp1;
+								document.getElementById('suggestionlabel').innerHTML = textdisp3;
+								}
+							);
+			        }
+					else //big == 1
+				    {
+						//alert("here2a");
+                        var textdisp1 = '';
+						var textdisp2 = '';
+			            var textdisp3 = '';
+
+						if ( driving_zero == 1 )
+						{
+							textdisp3 = "SORRY! Zero results found.";
+						}
+						else
+						{
+							textdisp2 = "FOUND! Duration=" + duration_driving_text + ", Distance=" + distance_driving_text;
+				
+							var dim_break;
+							var weight_break;
+							var dim_yes = 0;
+							var weight_yes = 0;
+
+							if (dim_val > 64000)
+							{
+								dim_yes = 1;
+								var dim_divide = dim_val / 64000;
+								dim_divide = Math.floor(dim_divide);
+								var dim_mod = dim_val % 64000;
+
+								if ( dim_mod > 0)
+								{
+									dim_break = dim_divide + 1;
+								}
+								else
+								{
+									dim_break = dim_divide;
+								}
+							}
+				
+							if (weight_val > 10 )
+							{
+								weight_yes = 1;
+								var weight_divide = weight_val / 10;
+								weight_divide = Math.floor(weight_divide);
+								var weight_mod = weight_val % 10;
+
+								if ( weight_mod > 0)
+								{
+									weight_break = weight_divide + 1;
+								}
+								else
+								{
+									weight_break = weight_divide;
+								}
+							}
+
+							var valSuggest;
+							
+							if ( dim_yes == 1 && weight_yes == 1)
+							{
+								if ( weight_break > dim_break )
+								{
+									valSuggest = weight_break;
+								}
+								else if ( dim_break > weight_break )
+								{
+									valSuggest = dim_break;
+								}
+								else
+								{
+									valSuggest = dim_break;
+								}
+							}
+							else if ( dim_yes == 1 )
+							{
+								valSuggest = dim_break;
+							}
+							else if ( weight_yes == 1)
+							{
+								valSuggest = weight_break;
+							}
+
+							var textdisp3 = "Possible to split into " +  valSuggest + " separate shipment(s)?";  
+						}
+						//alert("here2");
+						document.getElementById('vanlabel').innerHTML = textdisp2;
+						document.getElementById('bicyclelabel').innerHTML =  textdisp1;
+						document.getElementById('suggestionlabel').innerHTML = textdisp3;
+					}
+				} //1st callback 
+				);	
+		}//document.getElementById("clickMe").onclick = function ()	
+	
+      ///////////
+	  }//initAutocomplete
+	  ////////////
+	  
+	</script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGANtO2UlWa0BmDNVwdzDBbeTqVt6vOAk&libraries=places&callback=initAutocomplete"
+         async defer>
+    </script>
+  </body>
+</html>
