@@ -1,16 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<script>
-  var urlTo = 'https://lwoh.github.io/ui-design-yes.html'; //personal website URL - ui-design-yes.html
-  var winName = "Message";
-  var winSpecs = "width=200,height=200";
+<head>
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!--Font Awesome-->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+</head>
 
-  window.open(urlTo, winName, winSpecs);
-  window.close();
+<body>
+  <script>
+    //var urlTo = 'https://lwoh.github.io/ui-design-yes.html'; //personal website URL - ui-design-yes.html
+    //var winName = "Message";
+    //var winSpecs = "width=200,height=200";
+
+    //window.open(urlTo, winName, winSpecs);
+    //window.close();
+    var iCount = 5;
+	
+	var pgTimeout = setTimeout(reloadBack, 5000);
+	var timerInt = setInterval(intervalTimer, 1000);
+	
+	function reloadBack()
+	{
+      window.location.href = "https://lwoh.medium.com/why-do-i-prefer-simplicity-8b4c604d4d84"; //back to medium.com
+	}
+	
+	function intervalTimer()
+	{
+      iCount = iCount - 1;
+	  
+	  var timerText = document.getElementById("timer");
+	  
+	  if (iCount >= 0)
+	  {
+	    timerText.innerHTML = iCount;
+      }	  
+	}
+  </script>
   
-  window.location.href = "https://lwoh.medium.com/why-do-i-prefer-simplicity-8b4c604d4d84"; //back to medium.com
-</script>
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container" style="color:#009933">
+      <h1 class="display-4"><i class="fas fa-check-circle"></i></h1>
+      <p class="lead">That's right! You got it! :)</p>
+	  <p class="lead">
+	    <i style="color:#000000" class="fas fa-stopwatch">&nbsp;<b id="timer">5<b></i>
+      </p>
+    </div>
+  </div>
+  
+</body>
 
 </html>
 
