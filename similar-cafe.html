@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>SimilarCafe</title>
+	
+	<!--Font Awesome-->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+	
+    <style>
+	#snackbar {
+      visibility: hidden;
+      min-width: 250px;
+      margin-left: -125px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      border-radius: 2px;
+      padding: 16px;
+      position: fixed;
+      z-index: 1;
+      left: 50%;
+      bottom: 30px;
+      font-size: 17px;
+   }
+
+   #snackbar.show {
+      visibility: visible;
+      -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+      animation: fadein 0.5s, fadeout 0.5s 2.5s;
+   }
+
+   @-webkit-keyframes fadein {
+      from {bottom: 0; opacity: 0;} 
+      to {bottom: 30px; opacity: 1;}
+   }
+
+   @keyframes fadein {
+      from {bottom: 0; opacity: 0;}
+      to {bottom: 30px; opacity: 1;}
+   }
+
+   @-webkit-keyframes fadeout {
+      from {bottom: 30px; opacity: 1;} 
+      to {bottom: 0; opacity: 0;}
+   }
+
+   @keyframes fadeout {
+      from {bottom: 30px; opacity: 1;}
+      to {bottom: 0; opacity: 0;}
+   }
+   
+   #next-to-map {
+	  padding-left: 50px;
+	  padding-right: auto;
+   }
+   
+   #map {
+      height: 100%;
+      width: 50%;
+	  float: left;
+	  background-color: #FFFFFF;
+      margin-top: 2%;
+	  margin-bottom: auto;
+	  margin-left: auto;
+      margin-right: auto;
+      text-overflow: ellipsis;
+	  text-align: center;
+	  background: url("assets/img/bg-img.jpg") top right no-repeat;
+   }
+   
+   html, body {
+      height: 100%;
+	  width: 100%;
+      margin: 0;
+      padding: 0;
+   }
+   .controls {
+      margin-top: 10px;
+      border: 1px solid transparent;
+      border-radius: 2px 0 0 2px;
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      height: 32px;
+      outline: none;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+   }
+	  
+   #pano {
+      height: 100%;
+	  width: 100%;		
+   }
+   
+   html, body {
+      height: 100%;
+	  width: 100%;
+      margin: 0;
+      padding: 0;
+   }
+   .controls {
+      margin-top: 10px;
+      border: 1px solid transparent;
+      border-radius: 2px 0 0 2px;
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      height: 32px;
+      outline: none;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+   }
+	  
+   #over_map_top_left { 
+	  margin: 0;
+      position: absolute;
+      top: 5%;
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+	  z-index: 99;
+      background-color: #FFFFFF00;
+      font-family: "Calibri Light", sans-serif;
+	  width: 50%;
+      font-size: 10px;
+      font-weight: 100;
+	  margin-top: 0px;
+	  margin-bottom: 50px;
+	  margin-left: 0px;
+      margin-right: 0px;
+      padding: 10px 10px 10px 100px;
+      text-overflow: ellipsis;
+	  text-align: center;
+   }	 
+
+    #map {	 
+	  border: 0px solid black;
+      background-color: #FFFFFF;
+      display: flex;
+      margin-left: auto;
+	  margin-right: auto;
+	  text-align: center;
+    }
+	 
+	#container-pano {
+      border: 1px solid black;
+      background-color: #FFFFFF;
+      padding-top: 0px;
+      padding-right: 0px;
+      padding-bottom: 0px;
+      padding-left: 0px;
+    }
+	 
+	body {
+      font-family: "Calibri Light", sans-serif;
+	  width: 100%; 
+	  height: 100%;
+    }
+
+    /* Dashed border */
+    hr.dashed {
+       border-top: 3px dashed #bbb;
+    }
+
+    /* Dotted border */
+    hr.dotted {
+       border-top: 3px dotted #bbb;
+    }
+
+    /* Solid border */
+    hr.solid {
+       border-top: 3px solid #bbb;
+    }
+
+    attr{
+       white-space: nowrap;
+    }
+
+  </style>
+	
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style-similar-cafe.css" rel="stylesheet">
+  
+   
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+  <script src="./js/google-map-api-key.js"></script>
+  <script src="./js/google-map-init.js"></script>
+</head>
+ 
+<body onload="init()"> 
+  
+  <!-- ======= Mobile nav toggle button ======= -->
+  <button type="button" class="mobile-nav-toggle d-xl-none"><i class="icofont-navigation-menu"></i></button>
+
+  <!-- ======= Header + floating main console======= -->
+  <header id="header" class="d-flex flex-column justify-content-center">
+    <!--<nav class="nav-menu">
+      <ul>
+        <li class="active"><a href="index.html#services"><i class="bx bx-home"></i> <span>Home</span></a></li>
+      </ul>
+   	</nav><!-- .nav-menu --> 
+  </header>
+  
+  <nav class="navbar navbar-expand-sm navbar-dark sticky-top primary-background-color">
+    <a class="navbar-brand"><i class="fas fa-coffee sec-color"></i><b>&nbsp;SimilarCafe</b><sup>BETA</sup></a>
+    <a class="navbar-brand info-top" href="similar-cafe-info.html" target="_blank"><i class="fas fa-info-circle"></i><b>&nbsp;Info</b></a>
+  </nav>
+  
+ <section id="hero-ui-design" class="d-flex flex-column justify-content-center">
+   <div class="container-pano" style="width: 100%; height: 100%; float: left">
+     <div id="pano" style="width: 100%; height: 100%"></div>
+   </div>
+  
+ <div id="over_map_top_left">
+   <div class="row">
+     <div class="input-group">
+       <div class="d-flex flex-row col-lg-12">
+	     <div class="input-group mt-1">
+	       <input id="from-input" type="text" class="form-control form-control-border-radius-left " placeholder="Select your favourite place from autocomplete" aria-label="Search" aria-describedby="basic-addon2" required autofocus>
+           <!--<div class="input-group-append">
+             <button id="btn-cafe" class="btn button-border-radius-right" type="button"><i class="fas fa-search"></i></button>
+           </div>-->
+		   <div class="input-group-append">
+		     <h5 style="color:#FFFFFF">&nbsp;&nbsp;<i id="cafe-icon" class="fas fa-coffee" style="color:#FFFFFF">&nbsp;&#47;&nbsp;0&nbsp;similar cafe nearby</i></h5>
+		   </div>
+         </div>
+	   </div>
+     </div>	
+   </div>
+ </div> 
+ <!--over_map_top-->
+  
+ <div class="container-map" style="width: 100%; height: 100%; float: left; background-color:#FFFFFF00">
+   <div id="map" style="width: 50%; height: 85%; float: left"></div>
+   <div id="next-to-map" style="width: 50%; height: 100%; float: left; background-color:#FFFFFF00">
+   <br>
+   <div class="row">
+   	 <div class="col-lg-11">
+	   <h6 class="white-color"><i id="curr-loc-icon" class="fas fa-location-arrow sec-color"></i><b>&nbsp;Your current location</b></h6>
+	 </div>
+   </div>
+   <div class="row">
+	 <div class="col-lg-11">
+	   <div class="input-group-append">
+         <!--<h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h6>-->
+	     <h6 id="curr-loc-text" class="white-color" >n&#47;a</h6>
+	   </div>
+	 </div>
+   </div>
+   <div class="row">
+	 <div class="col-lg-11">	  	
+	   <div class="input-group-append">
+         <!--<button id="btn-cafe" class="btn button-border-radius-left" type="button"><i class="fas fa-location-arrow"></i></button>-->
+		 <input id="input-curr-loc" type="text" class="form-control form-control-border-radius-right sec-border-color" placeholder="Type & select from autocomplete to update current location" aria-label="Search" aria-describedby="basic-addon2" required autofocus>
+       </div>
+	 </div>
+   </div>
+   <div class="row">
+	 <div class="col-lg-11">
+	   <hr class="solid">
+	 </div>
+   </div>
+   <div class="row">
+	 <div class="col-lg-11">
+	   <h6 class="white-color"><i class="fas fa-search sec-color"></i><b>&nbsp;Keyword(s) used in search</b></h6>
+	   <h6 id="keyword-text" class="white-color">n&#47;a</h6>
+	 </div>
+   </div>
+   <!--future enhancement -->
+	<!--<div class="row"> 
+	  <div class="col-lg-11">	  	
+	  	 <div class="input-group-append">
+           <input id="input-keyword" type="text" class="form-control form-control-border-all-square " placeholder="Click here to update search keyword" aria-label="Search" aria-describedby="basic-addon2" required autofocus>
+		   <button id="btn-keyword-upd" onclick="updKeywordSearch()" class="btn button-border-radius-right" type="button"><i class="far fa-edit"></i></button>
+        </div>
+	  </div>
+   </div> -->
+ </div> <!--next-to-map-->
+   </div> <!--container-map-->
+ </section>
+ 
+ <div class="row primary-color-bg row-cust" style="width: 100%">
+   <div class="col-lg-2" >
+   </div>
+   <div class="col-lg-8">
+     <hr class="solid">
+   </div>
+   <div class="col-lg-2">
+   </div>
+ </div>
+ <div class="row primary-color-bg row-cust" style="width: 100%">
+   <div class="col-lg-2">
+   </div>
+   <div class="col-lg-8">
+     <div class="input-group-append">
+	   <h5><i id='similar-cafe-icon' class='fas fa-coffee sec-color'></i><h5>
+	   <h6 id="similar-cafe-text">
+	   <b>&nbsp;&nbsp;n&#47;a&nbsp;similar cafe within 10km of:</b>
+	   <br>
+	   <br>
+	   <i style="color:#ffffff"><b>&nbsp;&nbsp;n&#47;a</b></i>
+	   </h6>
+	 </div>
+   </div>
+   <div class="col-lg-2">
+   </div>
+ </div>
+ <div class="row primary-color-bg row-cust" style="width: 100%"> 
+ <br>
+ </div>
+ 
+ <div id="listRes" class="listDiv row-cust" style="width: 100%">
+ </div>
+
+ <div class="row primary-color-bg row-cust" style="width: 100%">
+   <div class="col-lg-2">
+   </div>
+   <div class="col-lg-8">
+     <hr class="solid">
+   </div>
+   <div class="col-lg-2">
+   </div>
+ </div>
+
+ <!--Hidden controls-->
+ <div id="snackbar" style="color:#FFFFFF; background-color:#000000"></div>
+
+ <div id="popup2" class="popup">
+   <div class="row">
+     <div class="col-lg-12" style="width: 100%; height: 10vh; background-color:#000000">
+	 </div>
+   </div>
+   <div class="row">
+     <div class="col-lg-1" style="width: 100%; height: auto; background-color:#000000">
+	 </div>
+     <div class="col-lg-10" style="width: 100%; height: auto; background-color:#ffffff00; padding-top: 20px; padding-bottom: 20px">
+	   <h5 id="det-name" style="color:#ffffff"><b></b></h5>
+	 </div>
+     <div class="col-lg-1" style="width: 100%; height: auto; background-color:#000000">
+	 </div>	
+   </div>
+   <div class="row" style="background-color:#000000">
+     <div class="col-lg-1">
+     </div>
+     <div class="col-lg-10">
+       <hr class="solid">
+     </div>
+     <div class="col-lg-1">
+     </div>
+   </div>
+   <div class="row" style="background-color:#000000; color:#ffffff">
+     <div class="col-lg-1" style="width: 100%; height: auto; background-color:#000000">
+	 </div>
+     <div class="col-lg-10" style="width: 100%; height: auto">
+       <h6 id="det-addr"></h6>
+	   <div class="row" style="background-color:#000000">
+         <div class="col-lg-12">
+           <hr class="solid">
+         </div>
+       </div>
+       <h6 id="det-opening hour"></h6>
+	   <h6 id="det-website"></h6>
+	   <h6 id="det-phone-num"></h6>
+       <sub id="det-html-attr"></sub>
+	   <br>
+	   <button onclick="hide('popup2')" class="btn button-spacehold"><b>OK</b></button>
+	 </div>
+	 <div class="col-lg-1" style="width: 100%; height: auto; background-color:#000000">
+	 </div>
+   </div>
+ </div>
+</body>
+</html>
