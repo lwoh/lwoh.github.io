@@ -151,9 +151,9 @@ function init(){
 function searchCafeNearBy(locationObj, strKeyword) {
   
   var errMsg;
-  var errMsgCurrLoc = "Update your current location from autocomplete dropdown / allow location detection"; 
+  var errMsgCurrLoc = "Update current location / allow location detection"; 
   var delimt = " | ";
-  var errMsgPlcFrom = "Type & select a valid place from autocomplete dropdown";
+  var errMsgPlcFrom = "Type & select a valid place from autocomplete";
  
 try
 { 
@@ -351,7 +351,7 @@ function nearbyCallback(results, status) {
 	//{
 	  clearListRes();
 	  
-      var errMsg = "No result found. Update keyword/Search again";
+      var errMsg = "No result found";
       showSnackBar(2, errMsg, 0);
 	  
 	  nRetrySearch = 1;
@@ -368,8 +368,8 @@ function updateCafeNearbyText(count)
   //For the top message
   var dispTxt;
   var txtStart = "&nbsp;&#47;&nbsp;";
-  var singularTxtEnd = "&nbsp;similar cafe nearby";
-  var pluralTxtEnd = "&nbsp;similar cafes nearby";
+  var singularTxtEnd = "&nbsp;'similar' cafe nearby";
+  var pluralTxtEnd = "&nbsp;'similar' cafes nearby";
   
   /*  <h6 id="similar-cafe-text">
 		<b>&nbsp;&nbsp;n&#47;a&nbsp;similar cafes, within 10km of:</b>
@@ -380,8 +380,8 @@ function updateCafeNearbyText(count)
   //Bottom message  
   var resultTxt;
   var resultTxtStart = "<b>&nbsp;&nbsp;";
-  var resultTxtPluralSec = "&nbsp;similar cafes within 10km of:</b><br><br><i style='color:#ffffff'><b>&nbsp;&nbsp;";
-  var resultTxtSingularSec = "&nbsp;similar cafe within 10km of:</b><br><br><i style='color:#ffffff'><b>&nbsp;&nbsp;";
+  var resultTxtPluralSec = "&nbsp;'similar' cafes within 10km of:</b><br><br><i style='color:#ffffff'><b>&nbsp;&nbsp;";
+  var resultTxtSingularSec = "&nbsp;'similar' cafe within 10km of:</b><br><br><i style='color:#ffffff'><b>&nbsp;&nbsp;";
   var resultTxtEnd = "</b></i>";
   
   dispTxt = txtStart;
@@ -480,7 +480,9 @@ function listCafeNearby(results)
 		 //    <a  href="https://maps.google.com/maps/contrib/110491459077609355847">Sem Sem</a>
          //  </sup>
 		 //</div>	
-         //results[i].photos[0].html_attributions.push("<a  href='https://maps.google.com/maps/contrib/110491459077609355847'>Sem Sem</a>");		 
+		 //#TEST1
+         /*results[i].photos[0].html_attributions.push("<a  href='https://maps.google.com/maps/contrib/110491459077609355847'>Sem Sem</a>");
+         results[i].photos[0].html_attributions.push("<a  href='https://maps.google.com/maps/contrib/110491459077609355847'>Sem Sem</a>");		*/ 
 	     if (results[i].photos[0].html_attributions)
 		 {  
 		    var sizeArr = results[i].photos[0].html_attributions.length;
@@ -667,8 +669,9 @@ function listCafeNearby(results)
 	 var supPlace = document.createElement("sup");
 	 //supImg.setAttribute("style", "color:#4e4f4f");
 	 var txtPlace = "Place by&nbsp;";
-     //results[i].html_attributions.push("<a  href='https://maps.google.com/maps/contrib/110491459077609355847'>Sem Sem</a>");	 
-     //results[i].html_attributions.push("<a  href='https://maps.google.com/maps/contrib/110491459077609355847'>Sem Sem</a>");	 
+	 //#TEST1
+     /*results[i].html_attributions.push("<a  href='https://maps.google.com/maps/contrib/110491459077609355847'>TEST Sem</a>");	 
+     results[i].html_attributions.push("<a  href='https://maps.google.com/maps/contrib/110491459077609355847'>TEST Sem</a>");	 */
 	 
 	 supPlace.innerHTML = defaultTxt;
 	 divAttrPlace.setAttribute("style", "color:#ffffff00");
@@ -888,8 +891,23 @@ function detailsCallback(results, status)
 	}
 	 
 	var txtPlace = "Place by";
-    //results[i].html_attributions.push("<a  href='https://maps.google.com/maps/contrib/110491459077609355847'>Sem Sem</a>");	 
-    //results[i].html_attributions.push("<a  href='https://maps.google.com/maps/contrib/110491459077609355847'>Sem Sem</a>");	 
+	//#TEST1
+    /*results.html_attributions.push("<a  href='https://maps.google.com/maps/contrib/110491459077609355847'>Sem Sem</a>");	 
+    results.html_attributions.push("<a  href='https://maps.google.com/maps/contrib/110491459077609355847'>Sem Sem</a>");	
+    results.html_attributions.push("<a  href='https://maps.google.com/maps/contrib/110491459077609355847'>Sem Sem</a>");	 
+    results.html_attributions.push("<a  href='https://maps.google.com/maps/contrib/110491459077609355847'>Sem Sem</a>");	 
+    results.html_attributions.push("<a  href='https://maps.google.com/maps/contrib/110491459077609355847'>Sem Sem</a>");	 
+    results.html_attributions.push("<a  href='https://maps.google.com/maps/contrib/110491459077609355847'>Sem Sem</a>");
+    results.html_attributions.push("<a  href='https://maps.google.com/maps/contrib/110491459077609355847'>Sem Sem</a>");	 
+    results.html_attributions.push("<a  href='https://maps.google.com/maps/contrib/110491459077609355847'>Sem Sem</a>");
+    results.html_attributions.push("<a  href='https://maps.google.com/maps/contrib/110491459077609355847'>Sem Sem</a>");	 
+    results.html_attributions.push("<a  href='https://maps.google.com/maps/contrib/110491459077609355847'>Sem Sem</a>");
+    results.html_attributions.push("<a  href='https://maps.google.com/maps/contrib/110491459077609355847'>Sem Sem</a>");	 
+    results.html_attributions.push("<a  href='https://maps.google.com/maps/contrib/110491459077609355847'>Sem Sem</a>");
+    results.html_attributions.push("<a  href='https://maps.google.com/maps/contrib/110491459077609355847'>Sem Sem</a>");	 
+    results.html_attributions.push("<a  href='https://maps.google.com/maps/contrib/110491459077609355847'>Sem Sem</a>");
+    results.html_attributions.push("<a  href='https://maps.google.com/maps/contrib/110491459077609355847'>Sem Sem</a>");	 
+    results.html_attributions.push("<a  href='https://maps.google.com/maps/contrib/110491459077609355847'>Sem Sem</a>");*/	
 	 
 	if (results.html_attributions)
     {  		 
@@ -897,7 +915,7 @@ function detailsCallback(results, status)
 	    var lastIndex = size - 1;
 		if (size > 0)
 		{
-		  placeHtmlAddr.innerHTML = txtPlace + breakTag;
+		  placeHtmlAddr.innerHTML = txtPlace + txtSpace;
 		  
 	      for (var a = 0; a < size; a++)
 		  {
@@ -907,7 +925,7 @@ function detailsCallback(results, status)
 		    }
 		    else
 		    {
-		      placeHtmlAddr.innerHTML = placeHtmlAddr.innerHTML + results.html_attributions[a] + breakTag;
+		      placeHtmlAddr.innerHTML = placeHtmlAddr.innerHTML + results.html_attributions[a] + txtSpace;
 		    }
 	      }
 		}
@@ -920,7 +938,7 @@ function detailsCallback(results, status)
     console.log(status.toString());
 	clickedId = -1;
 	
-	var errMsg = "No result found.";
+	var errMsg = "No result found";
     showSnackBar(2, errMsg, 0);
   }
 }
@@ -1011,7 +1029,7 @@ function checkGeometry(place) {
     // User entered the name of a Place that was not suggested and
     // pressed the Enter key, or the Place Details request failed.
     //window.alert("No details found for input: '" + place.name + "'");
-	var strErr = "No details found for input: '" + place.name + "'." + "Please select from autocomplete dropdown to search";
+	var strErr = "No details found for input: '" + place.name + "'. " + "Select from autocomplete to search";
 	showSnackBar(2, strErr, 0);
 	
 	clearTextValue("from-input");
@@ -1161,7 +1179,7 @@ function processSVData(data, status) {
   } 
   else 
   {
-    var errStr = "Street View data not found for this location.";
+    var errStr = "Street View data not found for this location";
     console.error(errStr);
 	
 	showSnackBar(0, errStr, 0);
