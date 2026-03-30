@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Matthew Oh — Product Manager</title>
+  <meta name="description" content="Portfolio of Matthew Oh, Product Leader based in Southeast Asia." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+  <style>
+    /* ── Tokens ───────────────────────────────────────────────── */
+    :root {
+      --bg:        #ffffff;
+      --surface:   #f7f7f5;
+      --text:      #1a1a1a;
+      --muted:     #666660;
+      --hint:      #999993;
+      --border:    rgba(0,0,0,0.08);
+      --r-md:      8px;
+      --r-lg:      12px;
+      --max:       900px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg:      #141414;
+        --surface: #1e1e1c;
+        --text:    #f0f0ec;
+        --muted:   #9a9a94;
+        --hint:    #5a5a56;
+        --border:  rgba(255,255,255,0.08);
+      }
+    }
+
+    /* ── Reset ────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--bg);
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; width: 100%; }
+
+    /* ── Shell ────────────────────────────────────────────────── */
+    .site {
+      max-width: var(--max);
+      margin: 0 auto;
+      border-left: 0.5px solid var(--border);
+      border-right: 0.5px solid var(--border);
+      min-height: 100vh;
+    }
+
+    /* ── Nav ──────────────────────────────────────────────────── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 32px;
+      background: var(--bg);
+      border-bottom: 0.5px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 17px;
+      letter-spacing: -0.3px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── Hero ─────────────────────────────────────────────────── */
+    .hero {
+      padding: 72px 32px 80px;
+      border-bottom: 0.5px solid var(--border);
+      position: relative;
+    }
+    .hero-eyebrow {
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .hero-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 46px;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      margin-bottom: 20px;
+      max-width: 560px;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--muted);
+    }
+    .hero-sub {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 480px;
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+    .hero-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .tag {
+      font-size: 12px;
+      padding: 4px 12px;
+      border-radius: 99px;
+      border: 0.5px solid var(--border);
+      color: var(--muted);
+    }
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 24px;
+      right: 32px;
+      font-size: 11px;
+      color: var(--hint);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .scroll-arrow {
+      width: 14px;
+      height: 14px;
+      border-right: 1.5px solid var(--hint);
+      border-bottom: 1.5px solid var(--hint);
+      transform: rotate(45deg);
+      margin-top: -4px;
+    }
+
+    /* ── Section ──────────────────────────────────────────────── */
+    .section {
+      padding: 56px 32px;
+      border-bottom: 0.5px solid var(--border);
+    }
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 28px;
+      letter-spacing: -0.5px;
+      margin-bottom: 32px;
+    }
+
+    /* ── Portfolio tiles ──────────────────────────────────────── */
+    .tiles {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .tile {
+      background: var(--surface);
+      border-radius: var(--r-lg);
+      border: 0.5px solid var(--border);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      text-decoration: none;
+      color: inherit;
+    }
+    .tile:hover { border-color: var(--muted); }
+    .tile-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--r-md);
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: var(--text);
+    }
+    .tile-badge {
+      display: inline-block;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 99px;
+      border: 0.5px solid var(--border);
+      color: var(--muted);
+      align-self: flex-start;
+    }
+    .tile-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px;
+      letter-spacing: -0.3px;
+      line-height: 1.2;
+    }
+    .tile-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .tile-meta {
+      font-size: 11px;
+      color: var(--muted);
+      padding-top: 12px;
+      border-top: 0.5px solid var(--border);
+    }
+
+    /* ── Medium cards ─────────────────────────────────────────── */
+    .medium-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .medium-card {
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.2s;
+      cursor: pointer;
+    }
+    .medium-card:hover { border-color: var(--muted); }
+    .medium-img {
+      background: var(--surface);
+      border-bottom: 0.5px solid var(--border);
+      line-height: 0;
+    }
+    .medium-img img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .medium-body {
+      padding: 18px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .medium-pub {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .medium-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 16px;
+      line-height: 1.35;
+      letter-spacing: -0.2px;
+    }
+    .medium-excerpt {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .medium-link {
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding-top: 10px;
+      border-top: 0.5px solid var(--border);
+    }
+
+    /* ── Footer ───────────────────────────────────────────────── */
+    .footer {
+      padding: 28px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--hint);
+    }
+
+    /* ── Mobile ───────────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .nav { padding: 16px 20px; }
+      .hero { padding: 48px 20px 60px; }
+      .hero-title { font-size: 32px; }
+      .hero-scroll-hint { display: none; }
+      .section { padding: 40px 20px; }
+      .tiles { grid-template-columns: 1fr; }
+      .medium-grid { grid-template-columns: 1fr; }
+      .footer { padding: 20px; flex-direction: column; gap: 4px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+<div class="site">
+
+  <!-- Nav -->
+  <nav class="nav">
+    <span class="nav-logo">Matthew Oh</span>
+    <ul class="nav-links">
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#writing">Writing</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <p class="hero-eyebrow">Product Leader · SEA</p>
+    <h1 class="hero-title">Building things<br><em>that actually ship.</em></h1>
+    <p class="hero-sub">I like clean design, fast iterations, and tech products people use without noticing.</p>
+    <div class="hero-tags">
+      <span class="tag">Product Strategy</span>
+      <span class="tag">E-commerce</span>
+      <span class="tag">Integrations</span>
+      <span class="tag">SEA Markets</span>
+      <span class="tag">AI/ML</span>
+    </div>
+    <div class="hero-scroll-hint" id="scroll-hint" role="button" tabindex="0" style="cursor:pointer;">
+      <span>Scroll</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- Portfolio -->
+  <section class="section" id="portfolio">
+    <p class="section-label">01 — Work</p>
+    <h2 class="section-title">Personal Portfolio</h2>
+    <div class="tiles">
+
+      <a class="tile" href="look-app.html">
+        <div class="tile-logo"><i class="fa-solid fa-mountain-city"></i></div>
+        <span class="tile-badge">Hackathon · 2014</span>
+        <div class="tile-name">LOOK!</div>
+        <p class="tile-desc">Windows 8 travel itinerary planner built with a 3-person team at Microsoft's Discover MY Apps hackathon in Malaysia. Winner — Ministry of Tourism & Culture category.</p>
+        <div class="tile-meta">Windows 8 · C# · Foursquare API · Team of 4</div>
+      </a>
+
+      <a class="tile" href="SimilarCafe/index.html">
+        <div class="tile-logo"><i class="fa-solid fa-mug-saucer"></i></div>
+        <span class="tile-badge">Personal project</span>
+        <div class="tile-name">SimilarCafe</div>
+        <p class="tile-desc">A conversational cafe finder for your phone. Type what you're craving — it surfaces nearby open cafes with addresses, hours, and turn-by-turn directions. Zero API costs, all open-source data.</p>
+        <div class="tile-meta">Not publicly released · OpenStreetMap · OSRM</div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- Writing -->
+  <section class="section" id="writing">
+    <p class="section-label">02 — Writing</p>
+    <h2 class="section-title">Stories on Medium</h2>
+    <div class="medium-grid">
+
+      <a class="medium-card" href="https://lwoh.medium.com/dividing-problem-into-smaller-pieces-945deee5932d">
+        <div class="medium-img">
+          <img src="assets/img/break-img.jpg" alt="Dividing Problem into Smaller Pieces" />
+        </div>
+        <div class="medium-body">
+          <p class="medium-pub">Medium · Engineering</p>
+          <p class="medium-title">Dividing Problem into Smaller Pieces</p>
+          <p class="medium-excerpt">How a performance bottleneck was broken down and eliminated to enable global deployment of a handheld application.</p>
+          <div class="medium-link">Read on Medium →</div>
+        </div>
+      </a>
+
+      <a class="medium-card" href="ui-design-a.html">
+        <div class="medium-img">
+          <img src="assets/img/ui-img.jpg" alt="Why Do I Prefer Simplicity?" />
+        </div>
+        <div class="medium-body">
+          <p class="medium-pub">Medium · Design</p>
+          <p class="medium-title">Why Do I Prefer Simplicity?</p>
+          <p class="medium-excerpt">A side-by-side comparison of cluttered versus simple UI design — and why less is almost always more.</p>
+          <div class="medium-link">Read on Medium →</div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <span>Matthew Oh · Product Leader</span>
+  </footer>
+
+</div>
+<script>
+  var scrollHint = document.getElementById('scroll-hint');
+  function doScroll() {
+    document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth' });
+  }
+  scrollHint.addEventListener('click', doScroll);
+  scrollHint.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') doScroll();
+  });
+</script>
+</body>
+</html>

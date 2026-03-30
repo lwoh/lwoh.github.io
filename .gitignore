@@ -1,0 +1,6 @@
+Resources/
+Resources-TEMP/
+*.tmp
+~$*
+.DS_Store
+Thumbs.db

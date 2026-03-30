@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LOOK! — Matthew Oh</title>
+  <meta name="description" content="LOOK! — Windows 8 travel itinerary planner. Winner of Discover MY Apps 2014." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+  <style>
+    /* ── Tokens ───────────────────────────────────────────────── */
+    :root {
+      --bg:      #ffffff;
+      --surface: #f7f7f5;
+      --text:    #1a1a1a;
+      --muted:   #666660;
+      --hint:    #999993;
+      --border:  rgba(0,0,0,0.08);
+      --r-md:    8px;
+      --r-lg:    12px;
+      --max:     900px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg:      #141414;
+        --surface: #1e1e1c;
+        --text:    #f0f0ec;
+        --muted:   #9a9a94;
+        --hint:    #5a5a56;
+        --border:  rgba(255,255,255,0.08);
+      }
+    }
+
+    /* ── Reset ────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--bg);
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; width: 100%; }
+
+    /* ── Shell ────────────────────────────────────────────────── */
+    .site {
+      max-width: var(--max);
+      margin: 0 auto;
+      border-left: 0.5px solid var(--border);
+      border-right: 0.5px solid var(--border);
+      min-height: 100vh;
+    }
+
+    /* ── Nav ──────────────────────────────────────────────────── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 32px;
+      background: var(--bg);
+      border-bottom: 0.5px solid var(--border);
+    }
+    .nav-back {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--text); }
+    .nav-back i { font-size: 11px; }
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 17px;
+      letter-spacing: -0.3px;
+    }
+
+    /* ── Page hero ────────────────────────────────────────────── */
+    .hero {
+      padding: 64px 32px 56px;
+      border-bottom: 0.5px solid var(--border);
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--hint);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hero-eyebrow span { display: flex; align-items: center; gap: 6px; }
+    .badge {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 99px;
+      border: 0.5px solid var(--border);
+      color: var(--hint);
+    }
+    .hero-logo {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--r-lg);
+      background: var(--surface);
+      border: 0.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+    .hero-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 42px;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+    .hero-title em { font-style: italic; color: var(--muted); }
+    .hero-sub {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .meta-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .meta-chip {
+      font-size: 11px;
+      padding: 4px 12px;
+      border-radius: 99px;
+      border: 0.5px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* ── Sections ─────────────────────────────────────────────── */
+    .section {
+      padding: 48px 32px;
+      border-bottom: 0.5px solid var(--border);
+    }
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--hint);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 24px;
+      letter-spacing: -0.4px;
+      margin-bottom: 24px;
+    }
+
+    /* ── Screenshot carousel ──────────────────────────────────── */
+    .carousel {
+      position: relative;
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      border: 0.5px solid var(--border);
+      background: var(--surface);
+    }
+    .carousel-track {
+      display: flex;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .carousel-slide {
+      min-width: 100%;
+    }
+    .carousel-slide img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .carousel-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .carousel-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 0.5px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .carousel-btn:hover { border-color: var(--muted); color: var(--text); }
+    .carousel-dots {
+      display: flex;
+      gap: 6px;
+    }
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--border);
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+    .dot.active { background: var(--text); }
+
+    /* ── Features grid ────────────────────────────────────────── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 0.5px solid var(--border);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+    }
+    .feature-item {
+      background: var(--surface);
+      padding: 20px 22px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .feature-icon {
+      font-size: 15px;
+      color: var(--hint);
+      margin-top: 2px;
+      flex-shrink: 0;
+      width: 18px;
+      text-align: center;
+    }
+    .feature-body {}
+    .feature-title {
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 3px;
+    }
+    .feature-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* ── Award ────────────────────────────────────────────────── */
+    .award-block {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .award-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 18px;
+      letter-spacing: -0.3px;
+      margin-bottom: 8px;
+    }
+    .award-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+    .award-img-wrap {
+      width: 100%;
+      border-radius: var(--r-md);
+      overflow: hidden;
+      border: 0.5px solid var(--border);
+    }
+    .award-img-wrap img { width: 100%; height: auto; display: block; }
+
+    /* ── Tech stack ───────────────────────────────────────────── */
+    .stack-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .stack-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      padding: 6px 14px;
+      border-radius: var(--r-md);
+      border: 0.5px solid var(--border);
+      color: var(--muted);
+      background: var(--surface);
+    }
+    .stack-chip i { font-size: 13px; }
+
+    /* ── Footer ───────────────────────────────────────────────── */
+    .footer {
+      padding: 28px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--hint);
+    }
+
+    /* ── Mobile ───────────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .nav { padding: 16px 20px; }
+      .hero { padding: 40px 20px 40px; }
+      .hero-title { font-size: 30px; }
+      .section { padding: 32px 20px; }
+      .features-grid { grid-template-columns: 1fr; }
+      .award-block { flex-direction: column; }
+      .award-img-wrap { width: 100%; }
+      .footer { padding: 20px; flex-direction: column; gap: 4px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+<div class="site">
+
+  <!-- Nav -->
+  <nav class="nav">
+    <a class="nav-back" href="index.html">
+      <i class="fa-solid fa-arrow-left"></i>
+      <span>Matthew Oh</span>
+    </a>
+    <span class="nav-logo" style="font-family:'DM Sans',sans-serif;font-size:13px;color:var(--hint);">Portfolio</span>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-eyebrow">
+      <span><i class="fa-solid fa-mountain-city"></i> LOOK!</span>
+      <span class="badge">Hackathon · 2014</span>
+    </div>
+    <div class="hero-logo"><i class="fa-solid fa-mountain-city"></i></div>
+    <h1 class="hero-title">LOOK!<br><em>Planning Made Easy.</em></h1>
+    <p class="hero-sub">Intelligent travel itinerary planner capable of suggesting nearby attractions to help anyone explore the world — built for Windows 8 at Microsoft's Discover MY Apps hackathon.</p>
+    <div class="meta-row">
+      <span class="meta-chip">Windows 8</span>
+      <span class="meta-chip">C#</span>
+      <span class="meta-chip">Foursquare API</span>
+      <span class="meta-chip">Team of 4</span>
+      <span class="meta-chip">Malaysia · 2014</span>
+    </div>
+  </section>
+
+  <!-- Screenshots -->
+  <section class="section">
+    <p class="section-label">Screenshots</p>
+    <h2 class="section-title">See it in action</h2>
+    <div class="carousel" id="carousel">
+      <div class="carousel-track" id="carousel-track">
+        <div class="carousel-slide">
+          <img src="assets/img/look1.png" alt="LOOK! — Main screen" />
+        </div>
+        <div class="carousel-slide">
+          <img src="assets/img/look2.png" alt="LOOK! — Itinerary view" />
+        </div>
+      </div>
+    </div>
+    <div class="carousel-controls">
+      <button class="carousel-btn" id="prev-btn" aria-label="Previous">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <div class="carousel-dots" id="dots">
+        <div class="dot active" data-index="0"></div>
+        <div class="dot" data-index="1"></div>
+      </div>
+      <button class="carousel-btn" id="next-btn" aria-label="Next">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="section">
+    <p class="section-label">Features</p>
+    <h2 class="section-title">What it does</h2>
+    <div class="features-grid">
+      <div class="feature-item">
+        <i class="fa-solid fa-location-dot feature-icon"></i>
+        <div class="feature-body">
+          <div class="feature-title">Smart attraction discovery</div>
+          <div class="feature-desc">Automatically suggests nearby restaurants, cafes, and places of interest based on your location.</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <i class="fa-solid fa-grip-vertical feature-icon"></i>
+        <div class="feature-body">
+          <div class="feature-title">Drag-and-drop timeline</div>
+          <div class="feature-desc">Select and arrange attractions into a day-by-day itinerary called a "timeline" with a simple drag interface.</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <i class="fa-solid fa-floppy-disk feature-icon"></i>
+        <div class="feature-body">
+          <div class="feature-title">Save & revisit</div>
+          <div class="feature-desc">Save timelines locally on your PC and revisit them at any time.</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <i class="fa-solid fa-wifi feature-icon"></i>
+        <div class="feature-body">
+          <div class="feature-title">Offline mode</div>
+          <div class="feature-desc">View saved timelines without an internet connection — perfect for travel.</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <i class="fa-solid fa-calendar-days feature-icon"></i>
+        <div class="feature-body">
+          <div class="feature-title">Organised by day & time</div>
+          <div class="feature-desc">Timelines are structured by day of week and time slot for easy trip planning.</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <i class="fa-solid fa-map feature-icon"></i>
+        <div class="feature-body">
+          <div class="feature-title">Foursquare integration</div>
+          <div class="feature-desc">Powered by Foursquare Places API for rich, real-world venue data and discovery.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Award -->
+  <section class="section">
+    <p class="section-label">Recognition</p>
+    <h2 class="section-title">Awards & press</h2>
+    <div class="award-block">
+      <div class="award-text">
+        <div class="award-title">Winner — Discover MY Apps 2014</div>
+        <p class="award-desc">LOOK! won the Ministry of Tourism and Culture (MoTaC) category at Microsoft's Discover MY Apps 2014 hackathon in Malaysia, and was shortlisted as a nominee for the finals of MSC Malaysia APICTA Awards 2014 in the Best Tourism & Hospitality category.</p>
+        <div class="stack-row">
+          <span class="stack-chip"><i class="fa-solid fa-trophy"></i> MoTaC Category Winner</span>
+          <span class="stack-chip"><i class="fa-solid fa-star"></i> APICTA 2014 Finalist</span>
+        </div>
+      </div>
+      <div class="award-img-wrap">
+        <img src="assets/img/look-award(2).png" alt="The Sun Daily — LOOK! award coverage, 5 May 2014" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech stack -->
+  <section class="section">
+    <p class="section-label">Technical</p>
+    <h2 class="section-title">Stack & context</h2>
+    <div class="stack-row">
+      <span class="stack-chip"><i class="fa-brands fa-microsoft"></i> Windows 8 App</span>
+      <span class="stack-chip"><i class="fa-solid fa-code"></i> C#</span>
+      <span class="stack-chip"><i class="fa-solid fa-map-location-dot"></i> Foursquare Places API</span>
+      <span class="stack-chip"><i class="fa-solid fa-people-group"></i> Team of 4</span>
+      <span class="stack-chip"><i class="fa-solid fa-calendar"></i> May 2014</span>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <span>Matthew Oh · Product Leader</span>
+    <a href="index.html" style="color:var(--hint); font-size:12px; display:flex; align-items:center; gap:6px;">
+      <i class="fa-solid fa-arrow-left" style="font-size:10px;"></i> Back to portfolio
+    </a>
+  </footer>
+
+</div>
+
+<script>
+  // Minimal vanilla carousel
+  const track = document.getElementById('carousel-track');
+  const dots   = document.querySelectorAll('.dot');
+  let current  = 0;
+  const total  = dots.length;
+
+  function goTo(n) {
+    current = (n + total) % total;
+    track.style.transform = `translateX(-${current * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
+  document.getElementById('prev-btn').addEventListener('click', () => goTo(current - 1));
+  document.getElementById('next-btn').addEventListener('click', () => goTo(current + 1));
+  dots.forEach(d => d.addEventListener('click', () => goTo(parseInt(d.dataset.index))));
+</script>
+</body>
+</html>

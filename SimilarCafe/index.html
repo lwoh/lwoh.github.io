@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>SimilarCafe</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div id="app">
+
+  <!-- ── Header ─────────────────────────────────────────────── -->
+  <header id="app-header">
+    <span class="brand">SimilarCafe</span>
+
+    <span id="location-pill">
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+      <span id="location-label">Detecting…</span>
+    </span>
+
+    <div class="header-actions">
+      <button class="hdr-btn" id="picklist-btn" aria-label="Picks">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        <span id="picklist-badge" style="display:none">0</span>
+      </button>
+      <button class="hdr-btn" id="history-btn" aria-label="History">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ── Chat area ──────────────────────────────────────────── -->
+  <div id="chat-area">
+    <div id="chat-messages"></div>
+  </div>
+
+  <!-- ── Input area ─────────────────────────────────────────── -->
+  <div id="input-area">
+
+    <!-- City fallback (shown when geolocation denied) -->
+    <div id="location-fallback" style="display:none">
+      <input id="city-input" class="city-input" type="text" placeholder="Enter your city…" autocomplete="off" />
+      <button id="city-search-btn" class="city-go-btn">Go</button>
+    </div>
+
+    <!-- Filter strip -->
+    <div class="filter-strip">
+      <label class="filter-chip">
+        <input type="checkbox" id="open-now-toggle" checked />
+        <span>Open now</span>
+      </label>
+      <div class="filter-sep"></div>
+      <label class="filter-chip">
+        <span>Within</span>
+        <select id="radius-select">
+          <option value="500">500 m</option>
+          <option value="1000" selected>1 km</option>
+          <option value="2000">2 km</option>
+          <option value="5000">5 km</option>
+        </select>
+      </label>
+    </div>
+
+    <!-- Message input -->
+    <div class="input-row">
+      <input id="chat-input" type="text" placeholder="What are you craving?" autocomplete="off" />
+      <button id="send-btn" aria-label="Send">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- ── Directions (full-screen overlay) ──────────────────── -->
+  <div id="screen-directions">
+    <div class="dir-header">
+      <div class="dir-top-row">
+        <button id="dir-back-btn" aria-label="Back">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        </button>
+        <div class="dir-title-block">
+          <span class="dir-dest-name">Cafe</span>
+          <span class="dir-summary">Getting route…</span>
+        </div>
+      </div>
+      <div class="mode-toggle">
+        <button class="mode-btn mode-btn--active" data-mode="WALKING">Walk</button>
+        <button class="mode-btn" data-mode="DRIVING">Drive</button>
+      </div>
+    </div>
+    <div id="directions-map"></div>
+    <div id="steps-list"></div>
+  </div>
+
+  <!-- ── Sheet overlay ──────────────────────────────────────── -->
+  <div id="sheet-overlay"></div>
+
+  <!-- ── Picklist sheet ────────────────────────────────────── -->
+  <div id="picklist-sheet" class="sheet" role="dialog" aria-modal="true" aria-label="Your picks">
+    <div class="sheet-handle"></div>
+    <div class="sheet-hdr">
+      <span class="sheet-title">Picks</span>
+      <button class="sheet-close-btn" data-sheet="picklist-sheet">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div id="picklist-container" class="sheet-body"></div>
+  </div>
+
+  <!-- ── History sheet ─────────────────────────────────────── -->
+  <div id="history-sheet" class="sheet" role="dialog" aria-modal="true" aria-label="Visit history">
+    <div class="sheet-handle"></div>
+    <div class="sheet-hdr">
+      <span class="sheet-title">History</span>
+      <button id="clear-history-btn" class="clear-btn">Clear</button>
+      <button class="sheet-close-btn" data-sheet="history-sheet">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div id="history-container" class="sheet-body"></div>
+  </div>
+
+  <!-- ── Detail drawer ─────────────────────────────────────── -->
+  <div id="drawer-overlay"></div>
+  <div id="detail-drawer" role="dialog" aria-modal="true" aria-label="Cafe details">
+    <div class="drawer-handle"></div>
+    <div class="drawer-toprow">
+      <button id="drawer-close-btn" aria-label="Close">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="drawer-content"></div>
+    <div class="drawer-footer">
+      <button class="drawer-add-btn">+ Add to Picks</button>
+    </div>
+  </div>
+
+</div><!-- #app -->
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script src="config.js"></script>
+<script src="store.js"></script>
+<script src="api.js"></script>
+<script src="ui.js"></script>
+<script src="app.js"></script>
+<script>document.addEventListener('DOMContentLoaded', initApp);</script>
+</body>
+</html>
